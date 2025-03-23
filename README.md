@@ -37,7 +37,8 @@ Follow these steps to set up the Chat Bot RAG System locally:
    > _Note: Ensure you have Python 3.7 or higher installed._
 
 3. **Update `.env`**
-   Add your *Gemini* api key to your `.env`
+   Head to [Google AI Studio](https://aistudio.google.com/prompts/new_chat) Add your *Gemini* api key to your `.env`
+   
 ## Usage
 
 To run the chat bot system, execute the main script:
@@ -46,3 +47,15 @@ To run the chat bot system, execute the main script:
 python main.py
 ```
 
+## References
+
+- **Gemini:**  
+  *Gemini* is used as a core component in this system. (For more details, please refer to the [Gemini documentation](https://example.com/gemini) or the corresponding publication.)  
+
+- **sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2:**  
+  This model is provided by the SentenceTransformers library. For additional details and usage, see the model card on [Hugging Face](https://huggingface.co/sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2). For background on Sentence-BERT, refer to:  
+  Reimers, N., & Gurevych, I. (2019). *Sentence-BERT: Sentence Embeddings using Siamese BERT-Networks.* [arXiv:1908.10084](https://arxiv.org/abs/1908.10084).
+
+- **Faiss:**  
+  Faiss is a library for efficient similarity search and clustering of dense vectors. For more details, see:  
+  Johnson, M., Douze, M., & Jégou, H. (2017). *Billion-scale similarity search with GPUs.* [arXiv:1702.08734](https://arxiv.org/abs/1702.08734) or visit the [Faiss GitHub repository](https://github.com/facebookresearch/faiss).
