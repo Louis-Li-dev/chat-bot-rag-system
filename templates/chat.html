@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>RAG powered by Gemini</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+  <!-- Modal Pop-up -->
+  <div id="myModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal()">&times;</span>
+      <h1>RAG Powered by Gemini</h1>
+      <h2>Overview</h2>
+      <p>This chatbot employs retrieval-augmented generation using the Gemini API and Sentence Transformers to provide smart, context-aware responses.</p>
+      <h2>How to Use</h2>
+      <ul>
+        <li>Document Storage: When documents are correctly stored, the system fetches the most relevant content for generating responses.</li>
+        <li>Query: Enter any questions pertaining to the documents.</li>
+      </ul>
+      <h2>Language Options</h2>
+      <p>Although English is the default language, you can choose another language for the bot’s replies.</p>
+    </div>
+  </div>
+  
+  <div class="toggle-container">
+    <button class="toggle-button" id="darkModeButton" onclick="toggleDarkMode()">🌙 Dark Mode</button>
+    <button class="toggle-button" id="infoButton" onclick="openModal()">ℹ️ About</button>
+  </div>
+  
+  <!-- Tab Navigation -->
+  <div class="tab">
+    <button class="tablinks" onclick="openTab(event, 'Chat')" id="defaultOpen">Chat</button>
+    <button class="tablinks" onclick="openTab(event, 'Documents')">Documents</button>
+    <button class="tablinks" onclick="openTab(event, 'Records')">Chat Records</button>
+  </div>
+  
+  <!-- Chat Tab Content -->
+  <div id="Chat" class="tabcontent">
+    <div class="chat-container">
+      <div class="chat-history">
+        {% for message in chat_history %}
+          {% if message.role == 'user' %}
+            <div class="message user-message">
+              <strong>You:</strong> {{ message.content | safe }}
+            </div>
+          {% else %}
+            <div class="message bot-message">
+              <strong>Bot:</strong> {{ message.content | safe }}
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+      <form method="post" class="input-container" id="chatForm">
+        <div class="input-row">
+          <select name="languageSelect" id="languageSelect">
+            <option value="English">English</option>
+            <option value="Simplified Chinese">简体中文 Simplified Chinese</option>
+            <option value="Tranditional Chinese">繁體中文 Traditional Chinese</option>
+            <option value="Vietnamese">Vietnamese</option>
+            <option value="Spanish">Spanish</option>
+            <option value="French">French</option>
+          </select>
+          <input type="text" name="user_input" id="userInput" placeholder="Type your message here..." required autofocus>
+          <input type="submit" value="Send">
+        </div>
+        <!-- Store chat history in a hidden textarea to preserve full JSON -->
+        <textarea name="chat_history" style="display:none;">{{ chat_history_json | tojson }}</textarea>
+      </form>
+      <!-- Save Chat Record Button -->
+      <button class="toggle-button" onclick="openSaveModal()">💾 Save Chat Record</button>
+    </div>
+  </div>
+  
+  <!-- Documents Tab Content -->
+  <div id="Documents" class="tabcontent">
+    <div class="chat-container">
+      <h2>Detected Documents</h2>
+      {% if databases %}
+        {% for db in databases %}
+          <a href="/document/{{ db.id }}" class="doc-link">{{ db.name }}</a>
+        {% endfor %}
+      {% else %}
+        <p>No documents available.</p>
+      {% endif %}
+    </div>
+  </div>
+  
+  <!-- Chat Records Tab Content -->
+  <div id="Records" class="tabcontent">
+    <div class="chat-container">
+      <h2>Saved Chat Records</h2>
+      {% if records %}
+        <ul>
+          {% for rec in records %}
+            <li>
+              <strong>{{ rec[1] }}</strong> ({{ rec[2] }})
+              <a href="/record/{{ rec[0] }}/continue" class="doc-link" style="display:inline-block; margin-left:10px;">Continue</a>
+              <a href="/record/{{ rec[0] }}/delete" class="doc-link" style="display:inline-block; margin-left:10px;">Delete</a>
+            </li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <p>No chat records saved.</p>
+      {% endif %}
+    </div>
+  </div>
+  
+  <footer class="footer-container">
+    <p>&copy; 2025 An-Syu Li. All rights reserved.</p>
+    
+    <p class="footer-link">
+        <a href="https://github.com/Louis-Li-dev" target="_blank">
+            <img src="{{ url_for('static', filename='github-mark-white.png') }}" alt="GitHub Logo">
+            Visit my GitHub
+        </a>
+    </p>
+  </footer>
+  
+  <!-- Save Record Modal -->
+  <div id="saveModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeSaveModal()">&times;</span>
+      <h2>Save Chat Record</h2>
+      <form method="post" id="saveForm">
+        <input type="text" name="record_name" placeholder="Enter a record name" required>
+        <!-- Hidden textarea to include chat history -->
+        <textarea name="chat_history" style="display:none;">{{ chat_history_json | tojson }}</textarea>
+        <input type="hidden" name="save_record" value="true">
+        <input type="submit" value="Save">
+      </form>
+    </div>
+  </div>
+  
+  <script>
+    function openTab(evt, tabName) {
+      var i, tabcontent, tablinks;
+      tabcontent = document.getElementsByClassName("tabcontent");
+      for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+      }
+      tablinks = document.getElementsByClassName("tablinks");
+      for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+      }
+      document.getElementById(tabName).style.display = "block";
+      evt.currentTarget.className += " active";
+    }
+    document.getElementById("defaultOpen").click();
+    
+    function toggleDarkMode() {
+      const body = document.body;
+      body.classList.toggle("dark-mode");
+      localStorage.setItem("darkMode", body.classList.contains("dark-mode"));
+      updateDarkModeButtonText();
+    }
+    
+    function updateDarkModeButtonText() {
+      const darkModeButton = document.getElementById("darkModeButton");
+      darkModeButton.innerText = document.body.classList.contains("dark-mode") ? "☀️ Light Mode" : "🌙 Dark Mode";
+    }
+    
+    (function() {
+      if (localStorage.getItem("darkMode") === "true") {
+        document.body.classList.add("dark-mode");
+      }
+      updateDarkModeButtonText();
+    })();
+    
+    (function() {
+      const chatHistory = document.querySelector('.chat-history');
+      if(chatHistory) {
+        chatHistory.scrollTop = chatHistory.scrollHeight;
+      }
+    })();
+    
+    function openModal() {
+      document.getElementById("myModal").style.display = "block";
+    }
+    
+    function closeModal() {
+      document.getElementById("myModal").style.display = "none";
+    }
+    
+    function openSaveModal() {
+      document.getElementById("saveModal").style.display = "block";
+    }
+    
+    function closeSaveModal() {
+      document.getElementById("saveModal").style.display = "none";
+    }
+    
+    const languageSelect = document.getElementById("languageSelect");
+    const storedLanguage = localStorage.getItem("selectedLanguage");
+    if (storedLanguage) {
+      languageSelect.value = storedLanguage;
+    }
+    languageSelect.addEventListener("change", function() {
+      localStorage.setItem("selectedLanguage", languageSelect.value);
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,294 @@
+/* General Styles */
+body {
+  font-family: 'Roboto', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f0f0f0;
+  transition: background-color 0.3s, color 0.3s;
+}
+.dark-mode {
+  background-color: #181818;
+  color: #ffffff;
+}
+
+/* Container Styles */
+.chat-container {
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+.dark-mode .chat-container {
+  background-color: #282828;
+}
+
+/* Chat History */
+.chat-history {
+  max-height: 60vh;
+  overflow-y: auto;
+  margin-bottom: 20px;
+  padding: 10px;
+  border-radius: 5px;
+  scrollbar-width: thin;
+  scrollbar-color: #ccc transparent;
+}
+.chat-history::-webkit-scrollbar {
+  width: 8px;
+}
+.chat-history::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 4px;
+}
+.dark-mode .chat-history {
+  scrollbar-color: #555 transparent;
+}
+.dark-mode .chat-history::-webkit-scrollbar-thumb {
+  background-color: #555;
+}
+
+/* Message Styles */
+.message {
+  margin: 10px;
+  padding: 10px;
+  border-radius: 5px;
+  max-width: 80%;
+}
+.user-message {
+  background-color: #dcf8c6;
+  align-self: flex-end;
+}
+.bot-message {
+  background-color: #ececec;
+  align-self: flex-start;
+}
+.dark-mode .user-message {
+  background-color: #297b43;
+}
+.dark-mode .bot-message {
+  background-color: #3a3a3a;
+}
+
+/* Input & Form Styles */
+.input-container {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  border-top: 1px solid #ccc;
+}
+.input-row {
+  display: flex;
+  align-items: center;
+}
+input[type="text"] {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  outline: none;
+}
+select {
+  margin-right: 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  outline: none;
+  background-color: #fff;
+}
+input[type="submit"] {
+  padding: 10px 20px;
+  margin-left: 10px;
+  border: none;
+  background-color: #28a745;
+  color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.1s ease;
+}
+input[type="submit"]:hover {
+  background-color: #218838;
+}
+input[type="submit"]:active {
+  transform: scale(0.98);
+}
+
+/* Toggle & Modal Styles */
+.toggle-container {
+  text-align: right;
+  padding: 10px;
+}
+.toggle-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  color: inherit;
+  transition: color 0.3s ease, transform 0.1s ease;
+  margin-left: 5px;
+}
+.toggle-button:hover {
+  color: #007bff;
+}
+.toggle-button:active {
+  transform: scale(0.95);
+}
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.modal-content {
+  background-color: #fff;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  max-width: 500px;
+  border-radius: 10px;
+  text-align: center;
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+.dark-mode .modal-content {
+  background-color: #282828;
+  color: #ffffff;
+  border-color: #444;
+}
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+}
+
+/* Tab Navigation Styles */
+.tab {
+  overflow: hidden;
+  border-bottom: 1px solid #ccc;
+  background-color: #f1f1f1;
+}
+.tab button {
+  background-color: inherit;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+  font-size: 17px;
+  color: #000;
+}
+.tab button:hover {
+  background-color: #ddd;
+}
+.tab button.active {
+  background-color: #ccc;
+}
+.dark-mode .tab {
+  background-color: #333;
+  border-bottom: 1px solid #555;
+}
+.dark-mode .tab button {
+  color: #fff;
+}
+.dark-mode .tab button:hover {
+  background-color: #444;
+}
+.dark-mode .tab button.active {
+  background-color: #555;
+}
+
+/* Document Link (Card) Styles */
+.doc-link {
+  display: block;
+  padding: 15px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #fff;
+  text-decoration: none;
+  color: #333;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+.doc-link:hover {
+  background-color: #f9f9f9;
+  border-color: #999;
+}
+.dark-mode .doc-link {
+  background-color: #444;
+  border-color: #666;
+  color: #fff;
+}
+.dark-mode .doc-link:hover {
+  background-color: #555;
+  border-color: #888;
+}
+/* Footer Styles */
+footer {
+  text-align: center;
+  padding: 15px;
+  margin: 20px auto 0;
+  font-size: 0.9em;
+  color: #ffffff;
+  border-top: 1px solid #ccc;
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #70d370df; /* Light background color */
+  border-radius: 20px;
+}
+.dark-mode footer {
+
+  background-color: #4dc361; /* Light background color */
+}
+/* Footer Link Style */
+.footer-link a {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  color: #ffffff;
+  transition: color 0.3s ease-in-out;
+}
+
+/* Dark Mode Footer Link */
+[data-theme="dark"] .footer-link a {
+  color: rgb(223, 221, 221);
+}
+
+/* GitHub Logo Style */
+.footer-link img {
+  width: 30px;
+  height: 30px;
+  transition: transform 0.3s ease-in-out;
+}
+
+/* Hover Effects */
+.footer-link a:hover {
+  color: #096fff; /* Lighter blue in light mode */
+}
+
+[data-theme="dark"] .footer-link a:hover {
+  color: #ffaa0c; /* Darker shade in dark mode */
+}
+
+.footer-link img:hover {
+  transform: scale(1.2);
+}
+

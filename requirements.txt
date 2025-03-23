@@ -1,0 +1,11 @@
+# Dev environment
+pip
+autopep8
+
+# App
+flask==2.3.3
+google-generativeai
+python-dotenv
+sentence-transformers
+faiss-cpu
+markdown

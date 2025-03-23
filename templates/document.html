@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document {{ doc_id + 1 }}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+  <div class="chat-container">
+    <a class="doc-link" style="text-align: center;" href="/">← Back to Chat</a>
+    <h1>Document {{ doc_id + 1 }}</h1>
+    <pre style="white-space: pre-wrap;">{{ content }}</pre>
+  </div>
+  
+  <script>
+    // Toggle dark mode based on localStorage setting.
+    (function() {
+      if (localStorage.getItem("darkMode") === "true") {
+        document.body.classList.add("dark-mode");
+      }
+    })();
+  </script>
+</body>
+</html>
