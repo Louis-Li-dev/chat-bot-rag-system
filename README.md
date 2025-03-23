@@ -36,9 +36,12 @@ Follow these steps to set up the Chat Bot RAG System locally:
 
    > _Note: Ensure you have Python 3.7 or higher installed._
 
-3. **Update `.env`**
-   Head to [Google AI Studio](https://aistudio.google.com/prompts/new_chat) Add your *Gemini* api key to your `.env`
-   
+3. **Create `.env`**
+   - Create a `.env` file according to `.example.env`
+   - Head to [Google AI Studio](https://aistudio.google.com/prompts/new_chat) Add your *Gemini* api key to your `.env`
+
+4. **Put PDF files in `data/`**
+   - Recommend you to put the files you want the model to compare and operate on under `data/`
 ## Usage
 
 To run the chat bot system, execute the main script:
