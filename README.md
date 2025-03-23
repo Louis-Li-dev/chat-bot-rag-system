@@ -3,9 +3,17 @@
 
 A retrieval-augmented generation (RAG) chat bot system that combines the power of large language models with a document retrieval engine to provide context-aware and accurate conversational responses.
 
-## Overview
+## Expected Results
+<div align="center">
 
-The Chat Bot RAG System is designed to enhance traditional chat bot interactions by incorporating a retrieval layer that sources relevant information from a knowledge base. This system is ideal for applications that require accurate, context-driven responses—from customer support to educational assistants.
+| Chat | Documents | Chat Records |
+|------|-----------|--------------|
+| <img src="https://github.com/user-attachments/assets/228d67eb-7763-4285-b619-a57877ca2be6" alt="Chat" width="200" /> | <img src="https://github.com/user-attachments/assets/b49727e3-170d-470b-b9d1-6b5fdfca4b03" alt="Documents" width="200" /> | <img src="https://github.com/user-attachments/assets/8598311d-338b-41b2-9b68-5c975176bada" alt="Chat Records" width="200" /> |
+
+
+
+</div>
+
 
 ## Installation
 
