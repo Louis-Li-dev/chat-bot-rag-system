@@ -27,7 +27,7 @@ model = genai.GenerativeModel(
 )
 
 # --- Database setup ---
-DATABASE = os.path.join(os.getcwd(), 'chat_records.db')
+DATABASE = os.path.join(os.getcwd(), 'data', 'chat_records.db')
 
 def init_db():
     conn = sqlite3.connect(DATABASE)
